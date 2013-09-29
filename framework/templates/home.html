@@ -1,0 +1,11 @@
+<div ng-include="'/templates/menu.html'"></div>
+
+<div class="container">
+	<h2>Tournaments</h2>
+	<table class="table table-striped">
+		<tr ng-repeat="league in leagues">
+			<td>{{league.name}}</td>
+			<td>{{league.start_date}}</td>
+		</tr>
+	</table>
+</div>

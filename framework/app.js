@@ -1,125 +1,65 @@
-var FRAMEWORK = FRAMEWORK || {};
 
-(function () {
+//	Benoem de applicatie (module).
+	var FRAMEWORK = angular.module('FRAMEWORK', []);
 
-	'use strict';
+//	De rest van de applicatie stop ik in een naamloze functie.
+	(function () {
 
-
-	//	[ Application Controller ]
-
-		FRAMEWORK.controller = {
-			init: function(){
-
-				//	Log
-					console.log("> Init application");
+		'use strict';
 
 
-				//	Start routing
-					FRAMEWORK.router.init();
-
-			}
-		};
-
-
-
-	//	[ Router ]
-		FRAMEWORK.router = {
-
-			browserHash: window.location.hash.slice(2),
-
-			init: function(){
-
-				//	Self
-					self = this;
-
-				//	Log
-					console.log("> Init router");
-
-				//	Define routes
-					routie({
-						'/': function() {
+		//	Stel een router in en bepaal welke view en controller gebruikt moeten worden.
+			FRAMEWORK.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 							
-							//	Log
-								console.log("> Route is /");
+				//	Home
+					$routeProvider.when('/', { templateUrl: '/templates/home.html', controller: 'homeController' });
+				
+				//	Default
+					$routeProvider.otherwise({redirectTo: '/'});
+				
+				//	# fix
+					$locationProvider.html5Mode(true);
 
-							//	Render page
-								self.renderPage(
-									'#home-template', 
-									{title: "Home", body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-									0
-								);
+			}]);
 
-						},
-						'/page1': function() {
 
-							//	Log
-								console.log("> Route is /page1");
 
-							//	Render page
-								self.renderPage(
-									'#page1-template', 
-									{title: "Page 1", body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."},
-									1
-								);
-						}
+		//	Controller voor de homepage
+			FRAMEWORK.controller('homeController', ['$scope', '$routeParams', '$http',  function($scope, $routeParams, $http){
+
+				console.log("Home controller");
+
+				$scope.hello = "Hello you idiot.";
+
+				//	JSON call om een accesstoken op te vragen.
+					/*
+					 * NIET NODIG, ACCESS TOKEN IS 3 JAAR GELDIG.
+					$http({
+						method: 'JSONP',
+						url: 'https://www.leaguevine.com/oauth2/token/?client_id=989b40c8262c33f2c29f0c150a3c45&client_secret=f0aa631222f1387fe32b4d4aadc2fa&grant_type=client_credentials&scope=universal&callback=JSON_CALLBACK'
+					}).
+					success(function(data) {
+						console.log(data);
+					}).
+					error(function(data) {
+						console.log("niet gelukt");
+					});
+					*/
+
+
+				//	Get call
+					$http({
+						method: 'JSONP',
+						url: 'https://api.leaguevine.com/v1/tournaments/?sport=ultimate&access_token=339f2de5ce&callback=JSON_CALLBACK'
+					}).
+					success(function(response) {
+						console.log(response);
+						$scope.leagues = response.objects;
+					}).
+					error(function() {
+						console.log("Get call niet gelukt");
 					});
 
+			}]);
 
-				//	Choose page
-					routie("/"+this.browserHash);
-
-					
-			},
-
-			renderPage: function(templateId, context, menuItem){
-
-				//	Log
-					console.log("> Render page with pageId: " + templateId);
-
-				
-				//	Select template
-					var templateHome = qwery(templateId)[0].innerHTML;
-					var template = Handlebars.compile(templateHome);
-				
-				
-				//	Generate html
-					var html = template(context);
-				
-
-				//	Append html to #content
-					qwery('#content')[0].innerHTML = html;
-
-
-				//	Remove all active menu items
-					var activeMenuItems = qwery('#main-menu .nav .active');
-					for (var i = activeMenuItems.length - 1; i >= 0; i--) {
-						activeMenuItems[i].classList.remove('active');
-					}
-
-				
-				//	Add active to right menu item
-					var targetMenuItem = qwery('#main-menu .nav > li');
-					targetMenuItem[menuItem].classList.add('active');
-
-			}
-
-		};
-
-
-
-
-	// 	[ Start application ]
-		domready(function () {
-
-			//	Log
-				console.log("> Dom is ready, start de applicatie.");
-
-			//	Start application init
-				FRAMEWORK.controller.init();
-
-			//	Log alles
-				console.log(FRAMEWORK);
-
-		});
-
-})();
+	})();
