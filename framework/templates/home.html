@@ -1,11 +1,53 @@
 <div ng-include="'/templates/menu.html'"></div>
 
 <div class="container">
-	<h2>Tournaments</h2>
-	<table class="table table-striped">
-		<tr ng-repeat="league in leagues">
-			<td>{{league.name}}</td>
-			<td>{{league.start_date}}</td>
-		</tr>
-	</table>
+	
+	<!-- TOURNAMENT INFO -->
+	<div class="row">
+		<div class="col-md-12">
+			<h1>{{tournamentInfo.name}}</h1>
+			<p>from: {{tournamentInfo.start_date}} | till: {{tournamentInfo.end_date}}</p>
+		</div>
+	</div>
+
+	<!-- POOLS -->
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Pools</h2>
+			<div class="panel panel-default" ng-repeat="pool in tournamentPools.objects">
+				
+				<div class="panel-heading">
+					<h3 class="panel-title">Pool: {{pool.name}}</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Games played</th>
+								<th>W</th>
+								<th>L</th>
+								<th>+/-</th>
+								<th>p. allowed</th>
+								<th>p. scored</th>
+							</tr>
+							
+						</thead>
+						<tr ng-repeat="standing in pool.standings | orderBy:'-plus_minus'">
+							<td><a href="/team/{{standing.team.id}}">{{standing.team.name}}</a></td>
+							<td>{{standing.games_played}}</td>
+							<td>{{standing.wins}}</td>
+							<td>{{standing.losses}}</td>
+							<td>{{standing.plus_minus}}</td>
+							<td>{{standing.points_allowed}}</td>
+							<td>{{standing.points_scored}}</td>
+						</tr>
+					</table>
+					<a href="/pool/{{pool.id}}" class="btn btn-default">Go to the schedule of pool {{pool.name}}</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 </div>
