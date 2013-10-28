@@ -61,6 +61,21 @@
 						url: '/team/teamId', class: ''
 					}
 				}
+				
+				/* currentPage kan je makkelijker achterhalen door bijvoorbeeld de volgende functie te gebruiken
+				
+				$scope.isActive = function(route) {
+					return route === $location.path();
+				};
+				
+				en dan kan je vervolgens in je template bijvoorbeeld dit gebruiken
+				
+				<nav ng-class="menu">
+					<a ng-class="{active:isActive('/home')}" href="#/home">Home</a>
+					<a ng-class="{active:isActive('/pools')}" href="#/pools">Home</a>
+				</nav>
+				
+				*/
 
 				$rootScope.$watch('currentPage', function(newValue, oldValue) {
 					
