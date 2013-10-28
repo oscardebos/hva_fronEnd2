@@ -1,5 +1,7 @@
-
 //	Benoem de applicatie (module).
+
+	/* Een meer beschrijvende naam voor je applicatie zou beter zijn  (dus niet FRAMEWORK) */
+	
 	var FRAMEWORK = angular.module('FRAMEWORK', []);
 
 //	De rest van de applicatie stop ik in een naamloze functie.
