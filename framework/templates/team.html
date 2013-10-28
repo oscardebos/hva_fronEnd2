@@ -1,0 +1,28 @@
+<div ng-include="'/templates/menu.html'"></div>
+
+<div class="container">
+	
+
+	<div class="row">
+		<div class="col-mid-12">
+			<div class="media">
+			<span class="pull-left">
+				<img class="media-object" src="{{teamInfo.profile_image_50}}" alt="...">
+			</span>
+			<div class="media-body">
+				<h1 class="media-heading">{{teamInfo.name}}</h1>
+				<ul class="list-unstyled">
+					<li>Wins: {{teamInfo.wins}}</li>
+					<li>Losses:{{teamInfo.losses}} </li>
+				</ul>
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<hr>
+
+	<div ng-include="'/templates/games.html'"></div>
+
+
+</div>
