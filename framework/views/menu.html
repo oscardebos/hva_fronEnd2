@@ -1,0 +1,32 @@
+
+<div id="navigation" ng-controller="menuController">
+	<nav id="main-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
+		
+		<div class="navbar-header">
+			<a href="/" class="navbar-brand">Amsterdam Ultimate 2013</a>
+			<span style="float: left; border-left: 1px solid #e6e6e6; border-right: 1px solid #e6e6e6;" ng-class="getLoaderClass()"><img height="50px" src="/img/stickman-frisbee.gif" alt=""></span>
+	
+		</div>
+
+	
+		<div class="collapse navbar-collapse">
+				
+			<div class="navbar-right" ng-show="user">
+				<span>Welkom, {{user.first_name}} {{user.last_name}}!</span>
+				<img width="50px" src="{{user.profile_image_50}}" alt="">
+			</div>
+	
+		</div>
+		
+	</nav>
+
+	<div class="container" ng-show="getBreadCrumbs()">
+		<ol class="breadcrumb">
+			<li ng-repeat="crumb in getBreadCrumbs()" ng-class="{{crumb.class}}">
+				<a ng-hide="crumb.class" href="{{crumb.href}}">{{crumb.name}}</a>
+				<span ng-show="crumb.class">{{crumb.name}}</span>
+			</li>
+		</ol>
+	</div>
+
+</div>

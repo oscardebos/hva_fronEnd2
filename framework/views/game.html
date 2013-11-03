@@ -1,0 +1,94 @@
+<div ng-include="'/views/menu.html'"></div>
+
+<div class="container">
+
+	<img src="/img/loader.gif" alt="" ng-hide="gameInformation">
+	<div class="row" ng-show="gameInformation">
+		<div class="col-sm-5">
+			<h1 style="text-align: center;">{{gameInformation.team_1.name}}</h1>
+			<div class="well" style="text-align: center;">
+				<h2>
+					<span style="cursor: pointer;" ng-click="changeScore(1,false)" class="glyphicon glyphicon-minus pull-left"></span>
+					{{gameInformation.team_1_score}}
+					<span style="cursor: pointer;" ng-click="changeScore(1,true)" class="glyphicon glyphicon-plus pull-right"></span></h2>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<h2 style="text-align: center;">vs</h2>
+		</div>
+		<div class="col-sm-5">
+			<h1 style="text-align: center;">{{gameInformation.team_2.name}}</h1>
+			<div class="well clearfix" style="text-align: center;">
+				<h2>
+					<span style="cursor: pointer;" ng-click="changeScore(2,false)" class="glyphicon glyphicon-minus pull-left"></span>
+					{{gameInformation.team_2_score}}
+					<span style="cursor: pointer;" ng-click="changeScore(2,true)" class="glyphicon glyphicon-plus pull-right"></span>
+				</h2>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" ng-show="gameInformation">
+		<div class="col-md-12">
+			<form class="form-inline" role="form">
+				<div class="checkbox">
+					<input type="checkbox" ng-model="isFinal">
+					Is final?
+				</div>
+				 | 
+				<button type="submit" ng-class="submitButtonClass" ng-click="submitScore()">{{submitButtonText}}</button>
+			</form>
+		</div>
+	</div>
+	
+	<br>
+
+
+	<div ng-show="feedback.success" class="alert alert-success fade in">
+		<button ng-click="clearFeedback()" type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<strong>Gelukt!</strong>
+	</div>
+	
+	<div ng-show="feedback.error" class="alert alert-danger fade in">
+		<button ng-click="clearFeedback()" type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<strong>Er is iets mis gegaan, probeer het nog eens...</strong>
+	</div>
+
+	<br><br>
+	<hr>
+
+	<img src="/img/loader.gif" alt="" ng-hide="gameHistory">
+	<div class="row" ng-show="gameHistory">
+		<div class="col-md-12">
+			<h2>Game History</h2>
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Team 1 name</th>
+							<th>Team 2 name</th>
+							<th>Team 1 score</th>
+							<th>Team 2 score</th>
+							<th>Is final?</th>
+							<th>Time</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="game_score in gameHistory">
+							<td>{{game_score.team_1.name}}</td>
+							<td>{{game_score.team_2.name}}</td>
+							<td>{{game_score.team_1_score}}</td>
+							<td>{{game_score.team_2_score}}</td>
+							<td>{{game_score.is_final}}</td>
+							<td>{{betterTime(game_score.time)}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!--<a href="" class="btn btn-default btn-block">Load more...</a>-->
+			<br>
+		</div>
+	</div>
+
+</div>

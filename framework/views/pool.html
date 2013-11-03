@@ -1,25 +1,20 @@
-<div ng-include="'/templates/menu.html'"></div>
+<div ng-include="'/views/menu.html'"></div>
 
 <div class="container">
+
+	<img src="/img/loader.gif" alt="" ng-hide="poolInformation">
 	
-	<!-- TOURNAMENT INFO -->
-	<div class="row">
+	<div class="row" ng-show="poolInformation">
 		<div class="col-md-12">
-			<h1>{{tournamentInfo.name}}</h1>
-			<p>from: {{tournamentInfo.start_date}} | till: {{tournamentInfo.end_date}}</p>
+			<h1>Pool: {{poolInformation.name}}</h1>
 		</div>
 	</div>
 
-	<!-- POOLS -->
-	<div class="row">
+	<div class="row" ng-show="poolInformation">
 		<div class="col-md-12">
-			<h2>Pools</h2>
-			<div class="panel panel-default" ng-repeat="pool in tournamentPools.objects">
-				
-				<div class="panel-heading">
-					<h3 class="panel-title">Pool: {{pool.name}}</h3>
-				</div>
-				<div class="panel-body">
+			<h2>Standings</h2>
+			
+				<div class="table-responsive">
 					<table class="table">
 						<thead>
 							<tr>
@@ -33,7 +28,7 @@
 							</tr>
 							
 						</thead>
-						<tr ng-repeat="standing in pool.standings | orderBy:'-plus_minus'">
+						<tr ng-repeat="standing in poolInformation.standings | orderBy:'-plus_minus'">
 							<td><a href="/team/{{standing.team.id}}">{{standing.team.name}}</a></td>
 							<td>{{standing.games_played}}</td>
 							<td>{{standing.wins}}</td>
@@ -43,11 +38,12 @@
 							<td>{{standing.points_scored}}</td>
 						</tr>
 					</table>
-					<a href="/pool/{{pool.id}}" class="btn btn-default">Go to the schedule of pool {{pool.name}}</a>
 				</div>
-			</div>
 
 		</div>
 	</div>
+	
+	<div ng-include="'/views/games.html'"></div>
+
 
 </div>

@@ -1,9 +1,9 @@
-<div ng-include="'/templates/menu.html'"></div>
+<div ng-include="'/views/menu.html'"></div>
 
 <div class="container">
 	
-
-	<div class="row">
+	<img src="/img/loader.gif" alt="" ng-hide="teamInfo">
+	<div class="row" ng-show="teamInfo">
 		<div class="col-mid-12">
 			<div class="media">
 			<span class="pull-left">
@@ -22,7 +22,7 @@
 
 	<hr>
 
-	<div ng-include="'/templates/games.html'"></div>
+	<div ng-include="'/views/games.html'"></div>
 
 
 </div>

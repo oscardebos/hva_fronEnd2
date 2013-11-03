@@ -1,0 +1,61 @@
+<div ng-include="'/views/menu.html'"></div>
+
+<div class="container">
+	
+	<img src="/img/loader.gif" alt="" ng-hide="tournamentInformation">
+	<div class="row" ng-show="tournamentInformation">
+		<div class="col-md-12">
+			<h1>{{tournamentInformation.name}}</h1>
+			<p>from: {{tournamentInformation.start_date}} | till: {{tournamentInformation.end_date}}</p>
+			<br>
+			<div ng-bind-html-unsafe="tournamentInformation.info"></div>
+
+		</div>
+	</div>
+
+	
+	<hr>
+
+	<img src="/img/loader.gif" alt="" ng-hide="tournamentPools">
+	<div class="row" ng-show="tournamentPools">
+		<div class="col-md-12">
+			<h2>Pools</h2>
+			<div class="panel panel-default" ng-repeat="pool in tournamentPools.objects">
+				
+				<div class="panel-heading">
+					<h3 class="panel-title">Pool: {{pool.name}}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Games played</th>
+									<th>W</th>
+									<th>L</th>
+									<th>+/-</th>
+									<th>p. allowed</th>
+									<th>p. scored</th>
+								</tr>
+								
+							</thead>
+							<tr ng-repeat="standing in pool.standings | orderBy:'-plus_minus'">
+								<td><a href="/team/{{standing.team.id}}">{{standing.team.name}}</a></td>
+								<td>{{standing.games_played}}</td>
+								<td>{{standing.wins}}</td>
+								<td>{{standing.losses}}</td>
+								<td>{{standing.plus_minus}}</td>
+								<td>{{standing.points_allowed}}</td>
+								<td>{{standing.points_scored}}</td>
+							</tr>
+						</table>
+					</div>
+					<a href="/pool/{{pool.id}}" class="btn btn-default">Go to the schedule of pool {{pool.name}}</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
